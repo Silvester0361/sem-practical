@@ -1,0 +1,54 @@
+<div class="container">
+    <form (submit)="onSubmit($event)">
+      <div class="form-group">
+        <label for="stud_id">Student ID</label>
+        <input type="text" class="form-control" id="stud_id" [(ngModel)]="student.stud_id" name="stud_id">
+      </div>
+  
+      <div class="form-group">
+        <label for="stud_name">Student Name</label>
+        <input type="text" class="form-control" id="stud_name" [(ngModel)]="student.stud_name" name="stud_name">
+      </div>
+  
+      <div *ngFor="let subject of subjects; let i = index" class="form-group">
+        <label>Subject {{i + 1}} Mark</label>
+        <input type="number" class="form-control" [(ngModel)]="student.marks['subject' + (i + 1)]" name="subject{{i + 1}}">
+      </div>
+  
+      <button type="submit" class="btn btn-primary">Submit</button>
+      <button type="button" class="btn btn-secondary" (click)="fetchRecords()">See Records</button>
+    </form>
+  
+    <div *ngIf="students.length">
+      <h2>Student Records</h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Student ID</th>
+            <th>Student Name</th>
+            <th>Subject 1</th>
+            <th>Subject 2</th>
+            <th>Subject 3</th>
+            <th>Subject 4</th>
+            <th>Subject 5</th>
+            <th>Actions</th> 
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let student of students">
+            <td>{{ student.stud_id }}</td>
+            <td>{{ student.stud_name }}</td>
+            <td [ngStyle]="{'color': student.marks.subject1 >= 40 ? 'green' : 'red'}">{{ student.marks.subject1 >= 40 ? 'Pass' : 'Fail' }}</td>
+            <td [ngStyle]="{'color': student.marks.subject2 >= 40 ? 'green' : 'red'}">{{ student.marks.subject2 >= 40 ? 'Pass' : 'Fail' }}</td>
+            <td [ngStyle]="{'color': student.marks.subject3 >= 40 ? 'green' : 'red'}">{{ student.marks.subject3 >= 40 ? 'Pass' : 'Fail' }}</td>
+            <td [ngStyle]="{'color': student.marks.subject4 >= 40 ? 'green' : 'red'}">{{ student.marks.subject4 >= 40 ? 'Pass' : 'Fail' }}</td>
+            <td [ngStyle]="{'color': student.marks.subject5 >= 40 ? 'green' : 'red'}">{{ student.marks.subject5 >= 40 ? 'Pass' : 'Fail' }}</td>
+            <td>
+                <button class="btn btn-danger" (click)="deleteStudent(student._id)">Delete</button> <!-- Delete button -->
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  
